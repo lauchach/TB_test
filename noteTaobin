@@ -1,0 +1,42 @@
+ข้อ 1 - สร้างกลไก Publish-Subscribe
+ต้องสร้างบริการ IPublishSubscribeService ที่สามารถให้ ISubscriber ลงทะเบียน (subscribe) ต่อเหตุการณ์ประเภทต่างๆ ได้ โดยเมื่อมีการ publish เหตุการณ์ ประเภทที่ตรงกับ subscriber จะถูกเรียกใช้งาน โดยทำดังนี้:
+
+สร้างอินเทอร์เฟซ IPublishSubscribeService ที่มีเมธอด publish และ subscribe
+สร้างบริการ PublishSubscribeService ที่สืบทอดจากอินเทอร์เฟซ IPublishSubscribeService
+กำหนดโครงสร้างข้อมูลภายใน PublishSubscribeService ที่สามารถเก็บและจัดการผู้ subscribe ให้เหตุการณ์แต่ละประเภทได้
+เมื่อมีการเรียก publish บริการจะวนลูปผ่าน subscriber ที่ตรงกับประเภทของเหตุการณ์นั้นและเรียกใช้งาน handle
+ข้อ 2 - สร้างฟังก์ชัน unsubscribe
+เพิ่มเมธอด unsubscribe ใน IPublishSubscribeService เพื่อให้สามารถยกเลิกการลงทะเบียน subscriber ได้:
+
+กำหนดเมธอด unsubscribe ในอินเทอร์เฟซ IPublishSubscribeService
+ใน PublishSubscribeService ให้เพิ่มฟังก์ชันการลบ subscriber ออกจากรายการที่ตรงกับประเภทของเหตุการณ์นั้นๆ
+ทำให้ unsubscribe ทำงานโดยกรองออกเฉพาะ subscriber ที่ตรงกัน แล้วเก็บรายการใหม่ที่เหลือในโครงสร้างข้อมูลเดิม
+ข้อ 3 - สร้าง MachineRefillSubscriber 
+เพิ่ม MachineRefillSubscriber ซึ่งจะเพิ่มจำนวนสินค้าของเครื่องเมื่อเกิดเหตุการณ์เติมสินค้า (MachineRefillEvent) โดยทำดังนี้: 
+
+กำหนดคลาส MachineRefillSubscriber ที่สืบทอดจาก ISubscriber
+ในเมธอด handle ของ MachineRefillSubscriber ให้เพิ่มจำนวนสินค้าตามค่าที่ได้รับจาก MachineRefillEvent
+ข้อ 4 - เพิ่มการแจ้งเตือนเมื่อระดับสต็อกต่ำกว่าเกณฑ์
+เมื่อระดับสต็อกของเครื่องใดลดลงต่ำกว่า 3 จะสร้างเหตุการณ์ LowStockWarningEvent โดยทำดังนี้:
+
+เพิ่มคลาส LowStockWarningEvent ที่สืบทอดจาก IEvent
+ใน MachineSaleSubscriber ตรวจสอบระดับสต็อกของเครื่องหลังการขาย หากต่ำกว่า 3 และยังไม่ได้รับการแจ้งเตือน ให้ publish เหตุการณ์ LowStockWarningEvent
+ตั้งสถานะ lowStockTriggered เป็น true เพื่อป้องกันไม่ให้เหตุการณ์นี้ถูกเรียกใช้งานซ้ำ
+ข้อ 5 - สร้างเหตุการณ์ StockLevelOkEvent
+เมื่อระดับสต็อกของเครื่องที่มีการเตือนต่ำกว่าเกณฑ์เพิ่มขึ้นถึง 3 หรือมากกว่า จะสร้างเหตุการณ์ StockLevelOkEvent ดังนี้:
+
+เพิ่มคลาส StockLevelOkEvent ที่สืบทอดจาก IEvent
+ใน MachineRefillSubscriber ตรวจสอบระดับสต็อกของเครื่องหลังการเติมสินค้า หากถึง 3 หรือมากกว่าและเคยแจ้งเตือนก่อนหน้านี้ ให้ publish เหตุการณ์ StockLevelOkEvent
+ตั้งสถานะ lowStockTriggered เป็น false เพื่อยืนยันว่าเหตุการณ์นี้จะไม่เกิดซ้ำอีก
+ข้อ 6 - สร้าง Subscriber ใหม่ StockWarningSubscriber
+สร้าง StockWarningSubscriber ที่จะทำงานเมื่อได้รับเหตุการณ์ LowStockWarningEvent หรือ StockLevelOkEvent โดยทำดังนี้:
+
+กำหนดคลาส StockWarningSubscriber ที่สืบทอดจาก ISubscriber
+ในเมธอด handle ของ StockWarningSubscriber ตรวจสอบประเภทเหตุการณ์:
+ถ้าเป็น LowStockWarningEvent ให้แสดงข้อความแจ้งเตือนระดับสต็อกต่ำ
+ถ้าเป็น StockLevelOkEvent ให้แสดงข้อความแจ้งเตือนว่าระดับสต็อกปกติแล้ว
+ข้อ 7 - กำหนดให้ subscriber เรียกใช้งานตามลำดับเหตุการณ์ที่เกิดขึ้น
+เพื่อให้ subscriber ทำงานตามลำดับการเกิดเหตุการณ์ ต้องใช้โครงสร้างข้อมูลภายใน publish ของ PublishSubscribeService ให้สามารถเรียกใช้งาน subscriber ตามลำดับที่เหตุการณ์เกิดขึ้น โดย:
+
+ใช้ Map หรือโครงสร้างที่เรียกใช้งาน subscriber ได้ตามลำดับที่ลงทะเบียน
+ทำให้ subscriber เรียก handle ตามลำดับการเรียก publish
