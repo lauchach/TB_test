@@ -2,16 +2,12 @@ import React, { useState } from 'react';
 import { initialDispensers } from './data';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
-import { UserProvider } from './contexts/UserContext';
-import { useUser } from './contexts/UserContext';
+import RegisterKeyoss from './components/RegisterKeyoss';
+import { Dispenser } from './types';
 
-function AppContent() {
+function App() {
   const [dispensers, setDispensers] = useState(initialDispensers);
-  const { user } = useUser();
-
-  const allDispensers = user?.dispenser 
-    ? [...dispensers, user.dispenser]
-    : dispensers;
+  const [showRegister, setShowRegister] = useState(false);
 
   const handleRestock = (dispenserId: string, ingredientId: string) => {
     setDispensers(current =>
@@ -53,24 +49,29 @@ function AppContent() {
     );
   };
 
+  const handleRegisterKeyoss = (newDispenser: Omit<Dispenser, 'id'>) => {
+    const id = `keyoss-${dispensers.length + 1}`;
+    setDispensers(current => [...current, { ...newDispenser, id }]);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
-      <Header />
+      <Header onRegisterClick={() => setShowRegister(true)} />
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <Dashboard 
-          dispensers={allDispensers}
+          dispensers={dispensers}
           onRestock={handleRestock}
           onOrder={handleOrder}
         />
       </main>
+      {showRegister && (
+        <RegisterKeyoss
+          onRegister={handleRegisterKeyoss}
+          onClose={() => setShowRegister(false)}
+        />
+      )}
     </div>
   );
 }
 
-export default function App() {
-  return (
-    <UserProvider>
-      <AppContent />
-    </UserProvider>
-  );
-}
+export default App;
