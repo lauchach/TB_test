@@ -4,7 +4,7 @@ export const initialDispensers: Dispenser[] = [
   {
     id: 'keyoss-1',
     name: 'Keyoss One',
-    location: 'Main Lobby',
+    location: 'Main Lobby head office',
     status: 'operational',
     ingredients: [
       { id: 'milk', name: 'Fresh Milk', currentLevel: 2000, maxLevel: 5000, unit: 'ml' },
@@ -16,7 +16,7 @@ export const initialDispensers: Dispenser[] = [
       {
         id: 'latte',
         name: 'Café Latte',
-        price: 4.50,
+        price: 45,
         available: true,
         ingredients: [
           { ingredientId: 'milk', amount: 200 },
@@ -26,7 +26,7 @@ export const initialDispensers: Dispenser[] = [
       {
         id: 'americano',
         name: 'Americano',
-        price: 3.50,
+        price: 35,
         available: true,
         ingredients: [
           { ingredientId: 'coffee', amount: 18 },
@@ -35,7 +35,7 @@ export const initialDispensers: Dispenser[] = [
       {
         id: 'milk-tea',
         name: 'Milk Tea',
-        price: 4.00,
+        price: 40,
         available: true,
         ingredients: [
           { ingredientId: 'milk', amount: 150 },
@@ -48,7 +48,7 @@ export const initialDispensers: Dispenser[] = [
   {
     id: 'keyoss-2',
     name: 'Keyoss Two',
-    location: 'Conference Area',
+    location: 'Siam Area A',
     status: 'operational',
     ingredients: [
       { id: 'milk', name: 'Fresh Milk', currentLevel: 1500, maxLevel: 5000, unit: 'ml' },
@@ -60,7 +60,7 @@ export const initialDispensers: Dispenser[] = [
       {
         id: 'latte',
         name: 'Café Latte',
-        price: 4.50,
+        price: 45,
         available: true,
         ingredients: [
           { ingredientId: 'milk', amount: 200 },
@@ -70,7 +70,7 @@ export const initialDispensers: Dispenser[] = [
       {
         id: 'americano',
         name: 'Americano',
-        price: 3.50,
+        price: 35,
         available: true,
         ingredients: [
           { ingredientId: 'coffee', amount: 18 },
@@ -79,7 +79,7 @@ export const initialDispensers: Dispenser[] = [
       {
         id: 'milk-tea',
         name: 'Milk Tea',
-        price: 4.00,
+        price: 40,
         available: true,
         ingredients: [
           { ingredientId: 'milk', amount: 150 },

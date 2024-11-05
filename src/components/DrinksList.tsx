@@ -33,7 +33,7 @@ export default function DrinksList({ drinks, ingredients, onOrder }: DrinksListP
                   <span className="font-medium text-gray-900">{drink.name}</span>
                 </div>
                 <span className="text-sm font-medium text-gray-700">
-                  ${drink.price.toFixed(2)}
+                  ฿ {drink.price.toFixed(2)}
                 </span>
               </div>
               

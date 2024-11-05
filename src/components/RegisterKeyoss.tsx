@@ -30,7 +30,7 @@ export default function RegisterKeyoss({ onRegister, onClose }: RegisterKeyossPr
         {
           id: 'latte',
           name: 'Café Latte',
-          price: 4.50,
+          price: 45,
           available: true,
           ingredients: [
             { ingredientId: 'milk', amount: 200 },
@@ -40,7 +40,7 @@ export default function RegisterKeyoss({ onRegister, onClose }: RegisterKeyossPr
         {
           id: 'americano',
           name: 'Americano',
-          price: 3.50,
+          price: 35,
           available: true,
           ingredients: [
             { ingredientId: 'coffee', amount: 18 },
@@ -49,7 +49,7 @@ export default function RegisterKeyoss({ onRegister, onClose }: RegisterKeyossPr
         {
           id: 'milk-tea',
           name: 'Milk Tea',
-          price: 4.00,
+          price: 40,
           available: true,
           ingredients: [
             { ingredientId: 'milk', amount: 150 },
@@ -89,7 +89,7 @@ export default function RegisterKeyoss({ onRegister, onClose }: RegisterKeyossPr
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              placeholder="e.g., Keyoss Three"
+              placeholder="e.g., Keyoss Siam"
             />
           </div>
 
@@ -104,7 +104,7 @@ export default function RegisterKeyoss({ onRegister, onClose }: RegisterKeyossPr
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               value={formData.location}
               onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-              placeholder="e.g., Break Room"
+              placeholder="e.g., Room"
             />
           </div>
 

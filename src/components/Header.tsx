@@ -12,7 +12,7 @@ export default function Header({ onRegisterClick }: HeaderProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Coffee className="w-8 h-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">Keyoss Beverage Management</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Keyoss Management</h1>
           </div>
           <div className="flex items-center space-x-2">
             <button
